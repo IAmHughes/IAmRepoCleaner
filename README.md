@@ -23,7 +23,7 @@ Deletes every repository for the user (if `-u=<username>` is used) or for an org
 
 #### OPTIONS:
 
---org | -o
+`--org` | `-o`
 
 When running the tool, this flag sets the API endpoint to point to an organization (specififed by `-o=<org_name>`), deleting the repos that match the given string from `-s` (see below).
 * _NOTE:_ Can NOT be used with the `-u` option.
