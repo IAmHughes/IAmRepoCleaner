@@ -25,7 +25,8 @@
 #/
 #/ --string
 #/ -s
-#/ When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete.
+#/ When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete. If omitted will
+#/ list repositories for given user or organization (specified by -u=<username> or -o=<org_name>) without deleting any.
 #/
 #/ EXAMPLES:
 #/   * Deletes repos under org "TheBeardedTom" that are named "Test_Repo_*" - For example, Test_Repo_, Test_Repo_qa, Test_Repo_234, etc.
@@ -48,7 +49,7 @@ while getopts ":v" opt; do
   esac
 done
 
-ORG_NAME=$1
+OWNER=$1
 STRING_MATCH=$2
 
 if [[ -z ${STRING_MATCH} ]]; then
