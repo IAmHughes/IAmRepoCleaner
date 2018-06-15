@@ -1,7 +1,16 @@
 # IAmRepoCleaner
+This script, `repo-cleaner`, will delete every repository matching a specific pattern for either a user or organization based on options passed through the command line.
+
+## Pre-Requisites
+
+### AUTHENTICATION:
+//TODO REPLACE
+You need a PAT
+
+## Running the Script
 
 ### NAME:
-repo-cleaner - Deletes every repository for the user or org specified up to 30 at a time
+repo-cleaner - Deletes every repository matching a specific name pattern for the user or org specified up to 30 at a time
 
 ### SYNOPSIS:
 
@@ -42,3 +51,22 @@ bash repo-cleaner -u=IAmHughes -s=MyRepo
 
 ### API DOCUMENTATION:
 All documentation can be found at https://developer.github.com/v3/
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://github.com/IAmHughes/IAmRepoCleaner/blob/master/.github/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Authors
+
+* **Thomas Hughes** - _Maintainer / On-Going Support_ - [@IAmHughes](https://GitHub.com/IAmHughes)
+* **Michael Johnson** - _Initial Work_ - [@Migarjo](https://GitHub.com/Migarjo)
+
+See also the list of [contributors](https://github.com/IAmHughes/IAmRepoCleaner/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/IAmHughes/IAmReaperCleaner/blob/master/LICENSE) file for details.
+
+## Acknowledgments
+
+* Thanks to @migarjo for the initial base for the script.
