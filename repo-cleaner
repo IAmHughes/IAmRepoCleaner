@@ -1,0 +1,44 @@
+#!/bin/sh
+
+while getopts ":v" opt; do
+  case ${opt} in
+    v ) # process option a
+      verbose=true
+      shift
+      ;;
+    \? ) echo "Usage: cmd [-v]"
+      ;;
+  esac
+done
+
+ORG_NAME=$1
+STRING_MATCH=$2
+
+if [[ -z ${STRING_MATCH} ]]; then
+ echo “No comparison string has been set to delete repos. Listing repos instead.”
+fi
+
+RESPONSE=“$(curl --url https://api.github.com/orgs/${ORG_NAME}/repos \
+ -s \
+ --header “authorization: Bearer ${GITHUB_API}“)”
+
+for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
+   _jq() {
+    echo ${repo} | base64 --decode | jq -r ${1}
+   }
+
+  REPO_NAME=$(_jq ‘.name’)
+
+
+  if [[ -z ${STRING_MATCH} ]]; then
+    echo ${REPO_NAME}
+  else
+    if [[ ${REPO_NAME} = *${STRING_MATCH}* ]]; then
+      echo “${REPO_NAME} matches and will be deleted”
+      curl --request DELETE \
+         --url https://api.github.com/repos/${ORG_NAME}/${REPO_NAME} \
+         --header “authorization: Bearer ${GITHUB_API}”
+    fi
+  fi
+
+done
