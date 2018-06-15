@@ -3,25 +3,25 @@ This script, `repo-cleaner`, will delete every repository matching a specific pa
 
 ## Pre-Requisites
 
-### AUTHENTICATION:
+#### AUTHENTICATION:
 //TODO REPLACE
 You need a PAT
 
 ## Running the Script
 
-### NAME:
+#### NAME:
 repo-cleaner - Deletes every repository matching a specific name pattern for the user or org specified up to 30 at a time
 
-### SYNOPSIS:
+#### SYNOPSIS:
 
 ```
 repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against]
 ```
 
-### DESCRIPTION:
+#### DESCRIPTION:
 Deletes every repository for the user (if `-u=<username>` is used) or for an organization (if `-o=<org_name>` is used instead) that matches the string (specified by `-s=<string-to-match-against>`). Will delete up to 30 repositories with every execution.
 
-### OPTIONS:
+#### OPTIONS:
 **--org**
 **-o**
 When running the tool, this flag sets the API endpoint to point to an organization (specififed by -o=<org_name>), deleting the repos that match the given string from -s (see below).
@@ -36,7 +36,7 @@ When running the tool, this flag sets the API endpoint to point to a user (speci
 **-s**
 When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete.
 
-### EXAMPLES:
+#### EXAMPLES:
 * Deletes repos under org "TheBeardedTom" that are named "Test_Repo_*" - For example, Test_Repo_, Test_Repo_qa, Test_Repo_234, etc.
 
 ```shell
@@ -49,7 +49,7 @@ bash repo-cleaner -o=TheBeardedTom -s=Test_Repo_
 bash repo-cleaner -u=IAmHughes -s=MyRepo
 ```
 
-### API DOCUMENTATION:
+#### API DOCUMENTATION:
 All documentation can be found at https://developer.github.com/v3/
 
 ## Contributing
