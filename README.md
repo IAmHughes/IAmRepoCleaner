@@ -15,11 +15,11 @@ repo-cleaner - Deletes every repository matching a specific name pattern for the
 #### SYNOPSIS:
 
 ```
-repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against]
+repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against>]
 ```
 
 #### DESCRIPTION:
-Deletes every repository for the user (if `-u=<username>` is used) or for an organization (if `-o=<org_name>` is used instead) that matches the string (specified by `-s=<string-to-match-against>`). Will delete up to 30 repositories with every execution.
+Deletes every repository for the user (if `-u=<username>` is used) or for an organization (if `-o=<org_name>` is used instead) that matches the string (specified by `-s=<string-to-match-against>`). If `-s` is omitted it will list the repos available to delete instead. Will delete up to 30 repositories with every execution due to default pagination.
 
 #### OPTIONS:
 **--org**
@@ -34,7 +34,7 @@ When running the tool, this flag sets the API endpoint to point to a user (speci
 
 **--string**
 **-s**
-When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete.
+When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete. If omitted will list repositories for given user or organization (specified by `-u=<username>` or `-o=<org_name>`) without deleting any.
 
 #### EXAMPLES:
 * Deletes repos under org `TheBeardedTom` that are named `Test_Repo_`
@@ -49,6 +49,12 @@ bash repo-cleaner -o=TheBeardedTom -s=Test_Repo_
 
 ```shell
 bash repo-cleaner -u=IAmHughes -s=MyRepo
+```
+
+* Lists repos under user account `IAmHughes` that are available to be deleted
+
+```shell
+bash repo-cleaner -u=IAmHughes
 ```
 
 #### API DOCUMENTATION:
