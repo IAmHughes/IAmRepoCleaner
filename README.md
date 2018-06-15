@@ -37,20 +37,22 @@ When running the tool, this flag sets the API endpoint to point to a user (speci
 When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete.
 
 #### EXAMPLES:
-* Deletes repos under org "TheBeardedTom" that are named "Test_Repo_*" - For example, Test_Repo_, Test_Repo_qa, Test_Repo_234, etc.
+* Deletes repos under org `TheBeardedTom` that are named `Test_Repo_`
+  * For example: `Test_Repo_`, `Test_Repo_qa`, `Test_Repo_234`, etc. would be deleted.
 
 ```shell
 bash repo-cleaner -o=TheBeardedTom -s=Test_Repo_
 ```
 
-* Deletes repos under user "IAmHughes" that are named "MyRepo*" - For example, MyRepo, MyRepo1, MyRepo99, MyRepoQA, etc.
+* Deletes repos under user `IAmHughes` that are named `MyRepo`
+  * For example: `MyRepo`, `MyRepo1`, `MyRepo99`, `MyRepoQA`, etc. would all be deleted.
 
 ```shell
 bash repo-cleaner -u=IAmHughes -s=MyRepo
 ```
 
 #### API DOCUMENTATION:
-All documentation can be found at https://developer.github.com/v3/
+All documentation can be found at the [GitHub Developer Docs](https://developer.github.com/v3/) page.
 
 ## Contributing
 
@@ -65,7 +67,7 @@ See also the list of [contributors](https://github.com/IAmHughes/IAmRepoCleaner/
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/IAmHughes/IAmReaperCleaner/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/IAmHughes/IAmReapoCleaner/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 
