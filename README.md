@@ -5,7 +5,7 @@ repo-cleaner - Deletes every repository for the user or org specified up to 30 a
 
 ### SYNOPSIS:
 
-```shell
+```
 repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against]
 ```
 
