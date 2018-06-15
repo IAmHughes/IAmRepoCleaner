@@ -56,7 +56,7 @@ if [[ -z ${STRING_MATCH} ]]; then
  echo “No comparison string has been set to delete repos. Listing repos instead.”
 fi
 
-RESPONSE=“$(curl --url https://api.github.com/orgs/${ORG_NAME}/repos \
+RESPONSE=“$(curl --url https://api.github.com/orgs/${OWNER}/repos \
  -s \
  --header “authorization: Bearer ${GITHUB_API}“)”
 
@@ -74,7 +74,7 @@ for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
     if [[ ${REPO_NAME} = *${STRING_MATCH}* ]]; then
       echo “${REPO_NAME} matches and will be deleted”
       curl --request DELETE \
-         --url https://api.github.com/repos/${ORG_NAME}/${REPO_NAME} \
+         --url https://api.github.com/repos/${OWNER}/${REPO_NAME} \
          --header “authorization: Bearer ${GITHUB_API}”
     fi
   fi
