@@ -38,6 +38,12 @@ When running the tool, this flag sets the API endpoint to point to a user (speci
 When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete. If omitted will list repositories for given user or organization (specified by `-u=<username>` or `-o=<org_name>`) without deleting any.
 
 #### EXAMPLES:
+* Lists repos under user account `IAmHughes` that are available to be deleted.
+
+```shell
+bash repo-cleaner -u=IAmHughes
+```
+
 * Deletes repos under org `TheBeardedTom` that are named `Test_Repo_`
   * For example: `Test_Repo_`, `Test_Repo_qa`, `Test_Repo_234`, etc. would be deleted.
 
@@ -50,12 +56,6 @@ bash repo-cleaner -o=TheBeardedTom -s=Test_Repo_
 
 ```shell
 bash repo-cleaner -u=IAmHughes -s=MyRepo
-```
-
-* Lists repos under user account `IAmHughes` that are available to be deleted
-
-```shell
-bash repo-cleaner -u=IAmHughes
 ```
 
 #### API DOCUMENTATION:
