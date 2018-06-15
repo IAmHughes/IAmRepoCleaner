@@ -28,12 +28,12 @@ Deletes every repository for the user (if `-u=<username>` is used) or for an org
 When running the tool, this flag sets the API endpoint to point to an organization (specififed by `-o=<org_name>`), deleting the repos that match the given string from `-s` (see below).
 * _NOTE:_ Can NOT be used with the `-u` option.
 
---user | -u
+`--user` | `-u`
 
 When running the tool, this flag sets the API endpoint to point to a user (specified by `-u=<username>`), deleting the repos that match the given string from `-s` (see below).
 * _NOTE:_ Can NOT be used with the `-o` option.
 
---string | -s
+`--string` | `-s`
 
 When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete. If omitted will list repositories for given user or organization (specified by `-u=<username>` or `-o=<org_name>`) without deleting any.
 
