@@ -24,13 +24,13 @@ Deletes every repository for the user (if `-u=<username>` is used) or for an org
 #### OPTIONS:
 **--org**
 **-o**
-When running the tool, this flag sets the API endpoint to point to an organization (specififed by -o=<org_name>), deleting the repos that match the given string from -s (see below).
-* _NOTE:_ Can NOT be used with the -u option.
+When running the tool, this flag sets the API endpoint to point to an organization (specififed by `-o=<org_name>`), deleting the repos that match the given string from `-s` (see below).
+* _NOTE:_ Can NOT be used with the `-u` option.
 
 **--user**
 **-u**
-When running the tool, this flag sets the API endpoint to point to a user (specified by -u=<username>), deleting the repos that match the given string from -s (see below).
-* _NOTE:_ Can NOT be used with the -o option.
+When running the tool, this flag sets the API endpoint to point to a user (specified by `-u=<username>`), deleting the repos that match the given string from `-s` (see below).
+* _NOTE:_ Can NOT be used with the `-o` option.
 
 **--string**
 **-s**
@@ -69,4 +69,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 ## Acknowledgments
 
-* Thanks to @migarjo for the initial base for the script.
+* Thanks to [@Migarjo](https://GitHub.com/Migarjo) for the initial base for the script.
