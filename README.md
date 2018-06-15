@@ -1,5 +1,5 @@
 # IAmRepoCleaner
-This script, `repo-cleaner`, will delete every repository matching a specific pattern for either a user or organization based on options passed through the command line.
+This script, `repo-cleaner`, will delete every repository matching a specific pattern for either a user or organization based on options passed through the command line. This solves the problem many of us experience when doing testing where multiple repositories are created and need to be deleted after the testing/debugging is finished.
 
 ## Pre-Requisites
 
