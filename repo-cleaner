@@ -58,15 +58,31 @@
 #/ API DOCUMENTATION:
 #/ All documentation can be found at https://developer.github.com/v3/
 
-while getopts ":v" opt; do
-  case ${opt} in
-    v ) # process option a
-      verbose=true
-      shift
-      ;;
-    \? ) echo "Usage: cmd [-v]"
-      ;;
-  esac
+# Parse options
+for i in "$@"
+do
+case $i in
+    -h|--help)
+    HELP=true
+    shift
+    break
+    ;;
+    -o=*|--org=*)
+    ORG="${i#*=}"
+    shift
+    ;;
+    -u=*|--user=*)
+    USER="${i#*=}"
+    shift
+    ;;
+    -s=*|--string=*)
+    STRING_MATCH="${i#*=}"
+    shift
+    ;;
+    *)
+    # unknown option
+    ;;
+esac
 done
 
 OWNER=$1
