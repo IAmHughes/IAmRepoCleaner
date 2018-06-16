@@ -60,7 +60,7 @@
 # Parse options
 for i in "$@"
 do
-case $i in
+  case $i in
     -o=*|--org=*)
     ORG="${i#*=}"
     shift
@@ -76,7 +76,7 @@ case $i in
     *)
     # unknown option
     ;;
-esac
+  esac
 done
 
 API_ROOT="https://api.github.com"
@@ -111,11 +111,9 @@ fi
 
 # Set OWNER as either user or org and sets api endpoint
 if [[ ${USERNAME} ]]; then
-  echo "Setting OWNER to USER: "${USERNAME}
   OWNER=${USERNAME}
   API_ENDPOINT=${API_ROOT}"/users"
-else if [[ ${ORG} ]]; then
-  echo "Setting OWNER to ORG: "${ORG}
+elif [[ ${ORG} ]]; then
   OWNER=${ORG}
   API_ENDPOINT=${API_ROOT}"/orgs"
 fi
