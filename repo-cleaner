@@ -85,6 +85,23 @@ case $i in
 esac
 done
 
+# Verify Inputs
+# Must set either org or user.
+if [[ -z ${ORG} ]] && [[ -z ${$USER} ]]; then
+    echo "No user or org was given. Please use either -u=<username> or -o=<org_name>"
+    echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
+    echo "Exiting script with no changes."
+    exit 1
+fi
+
+# Cannot set BOTH org and user.
+if [[ ${ORG} ]] && [[ ${USER} ]]; then
+  echo "Cannot set both an org and user. You must use either -u=<username> or -o=<org_name>, "
+  echo "not both."
+  echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
+  echo "Exiting script with no changes."
+  exit 1
+fi
 
 # String Match null check, if it is will list repos for org or user.
 if [[ -z ${STRING_MATCH} ]]; then
