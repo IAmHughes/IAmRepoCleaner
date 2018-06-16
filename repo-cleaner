@@ -102,9 +102,12 @@ else if [[ ${ORG} ]]; then
   API_ENDPOINT="https://api.github.com/orgs/"
 fi
 
+
+#### TODO REPLACE --URL param with ${API_ENDPOINT} once set properly for ${USER} above
+# Get list of repos from GitHub API for ${OWNER}
 RESPONSE=“$(curl --url https://api.github.com/orgs/${OWNER}/repos \
  -s \
- --header “authorization: Bearer ${GITHUB_API}“)”
+ --header “authorization: Bearer ${GITHUB_TOKEN}“)”
 
 for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
    _jq() {
