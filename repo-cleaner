@@ -81,16 +81,12 @@ done
 
 API_ROOT="https://api.github.com"
 
-# TODO Remove echo debugging
-echo "ORG             = ${ORG}"
-echo "USERNAME        = ${USERNAME}"
-echo "STRING_MATCH    = ${STRING_MATCH}"
-
 # Verify Inputs
 # Must set either org or user.
 if [[ -z ${ORG} ]] && [[ -z ${USERNAME} ]]; then
     echo "No user or org was given. Please use either -u=<username> or -o=<org_name>"
     echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
+    echo ""
     echo "Exiting script with no changes."
     exit 1
 fi
@@ -100,6 +96,7 @@ if [[ ${ORG} ]] && [[ ${USERNAME} ]]; then
   echo "Cannot set both an org and user. You must use either -u=<username> or -o=<org_name>, "
   echo "not both."
   echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
+  echo ""
   echo "Exiting script with no changes."
   exit 1
 fi
