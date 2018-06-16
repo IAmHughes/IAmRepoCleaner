@@ -72,7 +72,7 @@ case $i in
     shift
     ;;
     -u=*|--user=*)
-    USER="${i#*=}"
+    USERNAME="${i#*=}"
     shift
     ;;
     -s=*|--string=*)
@@ -87,7 +87,7 @@ done
 
 # Verify Inputs
 # Must set either org or user.
-if [[ -z ${ORG} ]] && [[ -z ${$USER} ]]; then
+if [[ -z ${ORG} ]] && [[ -z ${USERNAME} ]]; then
     echo "No user or org was given. Please use either -u=<username> or -o=<org_name>"
     echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
     echo "Exiting script with no changes."
@@ -95,7 +95,7 @@ if [[ -z ${ORG} ]] && [[ -z ${$USER} ]]; then
 fi
 
 # Cannot set BOTH org and user.
-if [[ ${ORG} ]] && [[ ${USER} ]]; then
+if [[ ${ORG} ]] && [[ ${USERNAME} ]]; then
   echo "Cannot set both an org and user. You must use either -u=<username> or -o=<org_name>, "
   echo "not both."
   echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
@@ -109,9 +109,9 @@ if [[ -z ${STRING_MATCH} ]]; then
 fi
 
 # Set OWNER as either user or org and sets api endpoint
-if [[ ${USER} ]] then
-  echo "Setting OWNER to USER: "${USER}
-  OWNER=${USER}
+if [[ ${USERNAME} ]] then
+  echo "Setting OWNER to USER: "${USERNAME}
+  OWNER=${USERNAME}
   API_ENDPOINT="https://api.github.com/" ###### TODO set proper endpoint for ${USER} repos
 else if [[ ${ORG} ]]; then
   echo "Setting OWNER to ORG: "${ORG}
