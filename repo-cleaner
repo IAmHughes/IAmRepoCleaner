@@ -85,8 +85,6 @@ case $i in
 esac
 done
 
-OWNER=$1
-STRING_MATCH=$2
 
 if [[ -z ${STRING_MATCH} ]]; then
  echo “No comparison string has been set to delete repos. Listing repos instead.”
