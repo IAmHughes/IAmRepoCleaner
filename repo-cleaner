@@ -126,6 +126,9 @@ RESPONSE=“$(curl --url https://api.github.com/orgs/${OWNER}/repos \
  -s \
  --header “authorization: Bearer ${GITHUB_TOKEN}“)”
 
+# Loop through list of repos. If ${STRING_MATCH} has a pattern, delete those
+# repos, otherwise just display the list of repos returned.
+#### TODO Replace --URL param in curl with ${API_ENDPOINT} once set properly for ${USER} above
 for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
    _jq() {
     echo ${repo} | base64 --decode | jq -r ${1}
@@ -141,7 +144,7 @@ for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
       echo “${REPO_NAME} matches and will be deleted”
       curl --request DELETE \
          --url https://api.github.com/repos/${OWNER}/${REPO_NAME} \
-         --header “authorization: Bearer ${GITHUB_API}”
+         --header “authorization: Bearer ${GITHUB_TOKEN}”
     fi
   fi
 
