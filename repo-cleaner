@@ -126,12 +126,12 @@ RESPONSE=“$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
 # repos, otherwise just display the list of repos returned.
 for repo in $(echo “${RESPONSE}” | jq -r '.[] | @base64');
 do
-   _jq() {
-    echo ${repo} | base64 --decode | jq -r ${1}
+   _jq()
+   {
+     echo ${repo} | base64 --decode | jq -r ${1}
    }
 
   REPO_NAME=$(_jq '.name')
-
 
   if [[ -z ${STRING_MATCH} ]]; then
     echo ${REPO_NAME}
