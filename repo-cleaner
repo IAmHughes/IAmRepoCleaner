@@ -124,12 +124,13 @@ RESPONSE=“$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
 
 # Loop through list of repos. If ${STRING_MATCH} has a pattern, delete those
 # repos, otherwise just display the list of repos returned.
-for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
+for repo in $(echo “${RESPONSE}” | jq -r '.[] | @base64');
+do
    _jq() {
     echo ${repo} | base64 --decode | jq -r ${1}
    }
 
-  REPO_NAME=$(_jq ‘.name’)
+  REPO_NAME=$(_jq '.name')
 
 
   if [[ -z ${STRING_MATCH} ]]; then
