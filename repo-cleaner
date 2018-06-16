@@ -84,6 +84,40 @@ case $i in
     ;;
 esac
 done
+# Display help if passed in or no args are passed
+if [[ -z ${HELP} ]] || [[ -z $1 ]]; then
+  echo ""
+  echo "SYNOPSIS:"
+  echo "repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against]"
+  echo ""
+  echo "OPTIONS:"
+  echo "--help"
+  echo "-h"
+  echo "Will display the options and what they do."
+  echo ""
+  echo "--org"
+  echo "-o"
+  echo "When running the tool, this flag sets the API endpoint to point to an "
+  echo "organization (specififed by -o=<org_name>), deleting the repos"
+  echo "that match the given string from -s (see below)."
+  echo "  * _NOTE:_ Can NOT be used with the -u option."
+  echo ""
+  echo "--user"
+  echo "-u"
+  echo "When running the tool, this flag sets the API endpoint to point to a "
+  echo "user (specified by -u=<username>), deleting the repos"
+  echo "that match the given string from -s (see below)."
+  echo "  * _NOTE:_ Can NOT be used with the -o option."
+  echo ""
+  echo "--string"
+  echo "-s"
+  echo "When running the tool, this flag sets the string to match against the "
+  echo "name of the repo(s) you are wanting to delete. If omitted will "
+  echo "list repositories for given user or organization (specified by "
+  echo "u=<username> or -o=<org_name>) without deleting any."
+  echo ""
+  exit 0
+fi
 
 # Verify Inputs
 # Must set either org or user.
