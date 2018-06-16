@@ -86,8 +86,20 @@ esac
 done
 
 
+# String Match null check, if it is will list repos for org or user.
 if [[ -z ${STRING_MATCH} ]]; then
- echo “No comparison string has been set to delete repos. Listing repos instead.”
+ echo "No comparison string has been set to delete repos. Listing repos instead."
+fi
+
+# Set OWNER as either user or org and sets api endpoint
+if [[ ${USER} ]] then
+  echo "Setting OWNER to USER: "${USER}
+  OWNER=${USER}
+  API_ENDPOINT="https://api.github.com/" ###### TODO set proper endpoint for ${USER} repos
+else if [[ ${ORG} ]]; then
+  echo "Setting OWNER to ORG: "${ORG}
+  OWNER=${ORG}
+  API_ENDPOINT="https://api.github.com/orgs/"
 fi
 
 RESPONSE=“$(curl --url https://api.github.com/orgs/${OWNER}/repos \
