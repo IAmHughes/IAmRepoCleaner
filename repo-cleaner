@@ -79,6 +79,9 @@ case $i in
 esac
 done
 
+API_ROOT="https://api.github.com"
+
+
 # Verify Inputs
 # Must set either org or user.
 if [[ -z ${ORG} ]] && [[ -z ${USERNAME} ]]; then
@@ -103,26 +106,23 @@ if [[ -z ${STRING_MATCH} ]]; then
 fi
 
 # Set OWNER as either user or org and sets api endpoint
-if [[ ${USERNAME} ]] then
+if [[ ${USERNAME} ]]; then
   echo "Setting OWNER to USER: "${USERNAME}
   OWNER=${USERNAME}
-  API_ENDPOINT="https://api.github.com/" ###### TODO set proper endpoint for ${USER} repos
+  API_ENDPOINT=${API_ROOT}"/users"
 else if [[ ${ORG} ]]; then
   echo "Setting OWNER to ORG: "${ORG}
   OWNER=${ORG}
-  API_ENDPOINT="https://api.github.com/orgs/"
+  API_ENDPOINT=${API_ROOT}"/orgs"
 fi
 
-
-#### TODO REPLACE --URL param with ${API_ENDPOINT} once set properly for ${USER} above
 # Get list of repos from GitHub API for ${OWNER}
-RESPONSE=“$(curl --url https://api.github.com/orgs/${OWNER}/repos \
+RESPONSE=“$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
  -s \
  --header “authorization: Bearer ${GITHUB_TOKEN}“)”
 
 # Loop through list of repos. If ${STRING_MATCH} has a pattern, delete those
 # repos, otherwise just display the list of repos returned.
-#### TODO Replace --URL param in curl with ${API_ENDPOINT} once set properly for ${USER} above
 for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
    _jq() {
     echo ${repo} | base64 --decode | jq -r ${1}
@@ -137,7 +137,7 @@ for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
     if [[ ${REPO_NAME} = *${STRING_MATCH}* ]]; then
       echo “${REPO_NAME} matches and will be deleted”
       curl --request DELETE \
-         --url https://api.github.com/repos/${OWNER}/${REPO_NAME} \
+         --url ${API_ROOT}/repos/${OWNER}/${REPO_NAME} \
          --header “authorization: Bearer ${GITHUB_TOKEN}”
     fi
   fi
