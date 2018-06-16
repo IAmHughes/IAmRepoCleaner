@@ -88,6 +88,7 @@ if [[ -z ${ORG} ]] && [[ -z ${USERNAME} ]]; then
     echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
     echo ""
     echo "Exiting script with no changes."
+    echo ""
     exit 1
 fi
 
@@ -98,12 +99,14 @@ if [[ ${ORG} ]] && [[ ${USERNAME} ]]; then
   echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
   echo ""
   echo "Exiting script with no changes."
+  echo ""
   exit 1
 fi
 
 # String Match null check, if it is will list repos for org or user.
 if [[ -z ${STRING_MATCH} ]]; then
  echo "No comparison string has been set to delete repos. Listing repos instead."
+ echo ""
 fi
 
 # Set OWNER as either user or org and sets api endpoint
