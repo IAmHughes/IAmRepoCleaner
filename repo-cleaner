@@ -2,10 +2,10 @@
 #/
 #/ NAME:
 #/ repo-cleaner - Deletes every repository for the user or org specified up to
-#/ 30 at a time
+#/ 30 repositories with every execution due to default pagination.
 #/
 #/ SYNOPSIS:
-#/ repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against]
+#/ repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against>]
 #/
 #/ DESCRIPTION:
 #/ Deletes every repository for the user (if -u=<username> is used) or for an
@@ -46,6 +46,10 @@
 #/ without deleting any.
 #/
 #/ EXAMPLES:
+#/
+#/   * Lists repos under user account `IAmHughes` that are available to be deleted.
+#/   $ bash repo-cleaner -u=IAmHughes
+#/
 #/   * Deletes repos under org "TheBeardedTom" that are named "Test_Repo_*"
 #/     For example, Test_Repo_, Test_Repo_qa, Test_Repo_234, etc.
 #/   $ bash repo-cleaner -o=TheBeardedTom -s=Test_Repo_
