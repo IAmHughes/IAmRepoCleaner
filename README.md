@@ -4,8 +4,13 @@ This script, `repo-cleaner`, will delete every repository matching a specific pa
 ## [WIP] Pre-Requisites
 
 #### AUTHENTICATION:
-//TODO REPLACE
-You need a PAT
+Before running this script, you must create a Personal Access Token (PAT) (see: [creating a personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) for more info) with the permissions `<repo>` and `<delete_repo>` scopes. You can read more about [Scopes for OAuth Apps here](https://developer.github.com/apps/building-oauth-apps/scopes-for-oauth-apps/). Once created, you must export your PAT as an environment variable named `<GITHUB_TOKEN>`.
+
+  * Exporting PAT as `GITHUB_TOKEN`
+ 
+```shell
+export GITHUB_TOKEN=abcd1234efg567
+```
 
 ## Running the Script
 
