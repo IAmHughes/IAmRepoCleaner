@@ -123,9 +123,9 @@ elif [[ ${ORG} ]]; then
 fi
 
 # Get list of repos from GitHub API for ${OWNER}
-RESPONSE=“$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
+RESPONSE="$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
  -s \
- --header “authorization: Bearer ${GITHUB_TOKEN}“)”
+ --header "authorization: Bearer ${GITHUB_TOKEN}")"
 
 # Loop through list of repos. If ${STRING_MATCH} has a pattern, delete those
 # repos, otherwise just display the list of repos returned.
