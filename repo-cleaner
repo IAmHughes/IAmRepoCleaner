@@ -123,13 +123,12 @@ elif [[ ${ORG} ]]; then
 fi
 
 # Get list of repos from GitHub API for ${OWNER}
-RESPONSE=“$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
+RESPONSE="$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
  -s \
- --header “authorization: Bearer ${GITHUB_TOKEN}“)”
+ --header "authorization: Bearer ${GITHUB_TOKEN}")"
 
 # Loop through list of repos. If ${STRING_MATCH} has a pattern, delete those
 # repos, otherwise just display the list of repos returned.
-
 for repo in $(echo "${RESPONSE}" | jq -r '.[] | @base64');
 do
   _jq()
@@ -143,10 +142,10 @@ do
     echo ${REPO_NAME}
   else
     if [[ ${REPO_NAME} = *${STRING_MATCH}* ]]; then
-      echo “${REPO_NAME} matches and will be deleted!”
+      echo "${REPO_NAME} matches and will be deleted!"
       curl --request DELETE \
          --url ${API_ROOT}/repos/${OWNER}/${REPO_NAME} \
-         --header “authorization: Bearer ${GITHUB_TOKEN}”
+         --header "authorization: Bearer ${GITHUB_TOKEN}"
     fi
   fi
 
