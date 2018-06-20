@@ -1,81 +1,151 @@
 #!/bin/sh
 #/
 #/ NAME:
-#/ repo-cleaner - Deletes every repository for the user or org specified up to 30 at a time
+#/ repo-cleaner - Deletes every repository for the user or org specified up to
+#/ 30 repositories with every execution due to default pagination.
 #/
 #/ SYNOPSIS:
-#/ repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against]
+#/ repo-cleaner [-o=<org_name>] [-u=<username>] [-s=<string-to-match-against>]
 #/
 #/ DESCRIPTION:
-#/ Deletes every repository for the user (if -u=<username> is used) or for an organization (if -o=<org_name> is used instead) that matches
-#/ the string (specified by -s=<string-to-match-against>). Will delete up to 30 repositories with every execution.
+#/ Deletes every repository for the user (if -u=<username> is used) or for an
+#/ organization (if -o=<org_name> is used instead) that matches the string
+#/ (specified by -s=<string-to-match-against>). Will delete up to 30 repositories
+#/ with every execution.
+#/
+#/ PRE-REQUISITES:
+#/ Before running this script, you must create a Personal Access Token (PAT)
+#/ at https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
+#/ with the permissions <repo> and <delete_repo> scopes. Read more about scopes
+#/ here: https://developer.github.com/apps/building-oauth-apps/scopes-for-oauth-apps/
+#/ Once created, you must export your PAT as an environment variable
+#/ named <GITHUB_TOKEN>.
+#/   * Exporting PAT as GITHUB_TOKEN
+#/   $ export GITHUB_TOKEN=abcd1234efg567
 #/
 #/ OPTIONS:
 #/ --org
 #/ -o
-#/ When running the tool, this flag sets the API endpoint to point to an organization (specififed by -o=<org_name>), deleting the repos
-#/ that match the given string from -s (see below).
+#/ When running the tool, this flag sets the API endpoint to point to an
+#/ organization (specififed by -o=<org_name>), deleting the repos that match the
+#/ given string from -s (see below).
 #/   * _NOTE:_ Can NOT be used with the -u option.
-#/ 
+#/
 #/ --user
 #/ -u
-#/ When running the tool, this flag sets the API endpoint to point to a user (specified by -u=<username>), deleting the repos
-#/ that match the given string from -s (see below).
-#/ . * _NOTE:_ Can NOT be used with the -o option.
+#/ When running the tool, this flag sets the API endpoint to point to a user
+#/ (specified by -u=<username>), deleting the repos that match the given string
+#/ from -s (see below).
+#/   * _NOTE:_ Can NOT be used with the -o option.
 #/
 #/ --string
 #/ -s
-#/ When running the tool, this flag sets the string to match against the name of the repo(s) you are wanting to delete. If omitted will
-#/ list repositories for given user or organization (specified by -u=<username> or -o=<org_name>) without deleting any.
+#/ When running the tool, this flag sets the string to match against the name of
+#/ the repo(s) you are wanting to delete. If omitted will list repositories for
+#/ given user or organization (specified by -u=<username> or -o=<org_name>)
+#/ without deleting any.
 #/
 #/ EXAMPLES:
-#/   * Deletes repos under org "TheBeardedTom" that are named "Test_Repo_*" - For example, Test_Repo_, Test_Repo_qa, Test_Repo_234, etc.
+#/
+#/   * Lists repos under user account `IAmHughes` that are available to be deleted.
+#/   $ bash repo-cleaner -u=IAmHughes
+#/
+#/   * Deletes repos under org "TheBeardedTom" that are named "Test_Repo_*"
+#/     For example, Test_Repo_, Test_Repo_qa, Test_Repo_234, etc.
 #/   $ bash repo-cleaner -o=TheBeardedTom -s=Test_Repo_
 #/
-#/   * Deletes repos under user "IAmHughes" that are named "MyRepo*" - For example, MyRepo, MyRepo1, MyRepo99, MyRepoQA, etc.
+#/   * Deletes repos under user "IAmHughes" that are named "MyRepo*"
+#/     For example, MyRepo, MyRepo1, MyRepo99, MyRepoQA, etc.
 #/   $ bash repo-cleaner -u=IAmHughes -s=MyRepo
 #/
 #/ API DOCUMENTATION:
 #/ All documentation can be found at https://developer.github.com/v3/
 
-while getopts ":v" opt; do
-  case ${opt} in
-    v ) # process option a
-      verbose=true
-      shift
-      ;;
-    \? ) echo "Usage: cmd [-v]"
-      ;;
+# Parse options
+for i in "$@"
+do
+  case $i in
+    -o=*|--org=*)
+    ORG="${i#*=}"
+    shift
+    ;;
+    -u=*|--user=*)
+    USERNAME="${i#*=}"
+    shift
+    ;;
+    -s=*|--string=*)
+    STRING_MATCH="${i#*=}"
+    shift
+    ;;
+    *)
+    # unknown option
+    ;;
   esac
 done
 
-OWNER=$1
-STRING_MATCH=$2
+API_ROOT="https://api.github.com"
 
-if [[ -z ${STRING_MATCH} ]]; then
- echo “No comparison string has been set to delete repos. Listing repos instead.”
+# Verify Inputs
+# Must set either org or user.
+if [[ -z ${ORG} ]] && [[ -z ${USERNAME} ]]; then
+    echo "No user or org was given. Please use either -u=<username> or -o=<org_name>"
+    echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
+    echo ""
+    echo "Exiting script with no changes."
+    echo ""
+    exit 1
 fi
 
-RESPONSE=“$(curl --url https://api.github.com/orgs/${OWNER}/repos \
+# Cannot set BOTH org and user.
+if [[ ${ORG} ]] && [[ ${USERNAME} ]]; then
+  echo "Cannot set both an org and user. You must use either -u=<username> or -o=<org_name>, "
+  echo "not both."
+  echo "  Ex: bash repo-cleaner -u=IAmHughes -s=MyRepo"
+  echo ""
+  echo "Exiting script with no changes."
+  echo ""
+  exit 1
+fi
+
+# String Match null check, if it is will list repos for org or user.
+if [[ -z ${STRING_MATCH} ]]; then
+ echo "No comparison string has been set to delete repos. Listing repos instead."
+ echo ""
+fi
+
+# Set OWNER as either user or org and sets api endpoint
+if [[ ${USERNAME} ]]; then
+  OWNER=${USERNAME}
+  API_ENDPOINT=${API_ROOT}"/users"
+elif [[ ${ORG} ]]; then
+  OWNER=${ORG}
+  API_ENDPOINT=${API_ROOT}"/orgs"
+fi
+
+# Get list of repos from GitHub API for ${OWNER}
+RESPONSE="$(curl --url ${API_ENDPOINT}/${OWNER}/repos \
  -s \
- --header “authorization: Bearer ${GITHUB_API}“)”
+ --header "authorization: Bearer ${GITHUB_TOKEN}")"
 
-for repo in $(echo “${RESPONSE}” | jq -r ‘.[] | @base64'); do
-   _jq() {
+# Loop through list of repos. If ${STRING_MATCH} has a pattern, delete those
+# repos, otherwise just display the list of repos returned.
+for repo in $(echo "${RESPONSE}" | jq -r '.[] | @base64');
+do
+  _jq()
+  {
     echo ${repo} | base64 --decode | jq -r ${1}
-   }
+  }
 
-  REPO_NAME=$(_jq ‘.name’)
-
+  REPO_NAME=$(_jq '.name')
 
   if [[ -z ${STRING_MATCH} ]]; then
     echo ${REPO_NAME}
   else
     if [[ ${REPO_NAME} = *${STRING_MATCH}* ]]; then
-      echo “${REPO_NAME} matches and will be deleted”
+      echo "${REPO_NAME} matches and will be deleted!"
       curl --request DELETE \
-         --url https://api.github.com/repos/${OWNER}/${REPO_NAME} \
-         --header “authorization: Bearer ${GITHUB_API}”
+         --url ${API_ROOT}/repos/${OWNER}/${REPO_NAME} \
+         --header "authorization: Bearer ${GITHUB_TOKEN}"
     fi
   fi
 
