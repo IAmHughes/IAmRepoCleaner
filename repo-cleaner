@@ -142,10 +142,10 @@ do
     echo ${REPO_NAME}
   else
     if [[ ${REPO_NAME} = *${STRING_MATCH}* ]]; then
-      echo “${REPO_NAME} matches and will be deleted!”
+      echo "${REPO_NAME} matches and will be deleted!"
       curl --request DELETE \
          --url ${API_ROOT}/repos/${OWNER}/${REPO_NAME} \
-         --header “authorization: Bearer ${GITHUB_TOKEN}”
+         --header "authorization: Bearer ${GITHUB_TOKEN}"
     fi
   fi
 
