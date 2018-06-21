@@ -16,7 +16,7 @@
 #/ PRE-REQUISITES:
 #/ Before running this script, you must create a Personal Access Token (PAT)
 #/ at https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
-#/ with the permissions <repo> and <admin:org> scopes and <delete_repo>. Read more
+#/ with the permissions <repo> and <delete_repo> scopes. Read more
 #/ about scopes here: https://developer.github.com/apps/building-oauth-apps/scopes-for-oauth-apps/
 #/ Once created, you must export your PAT as an environment variable
 #/ named <GITHUB_TOKEN>.
