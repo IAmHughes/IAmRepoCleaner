@@ -1,7 +1,7 @@
 # IAmRepoCleaner
 This script, `repo-cleaner`, will delete every repository matching a specific pattern for either a user or organization based on options passed through the command line. This solves the problem many of us experience when doing testing where multiple repositories are created and need to be deleted after the testing/debugging is finished.
 
-## Pre-Requisites
+## PRE-REQUISITES
 
 #### AUTHENTICATION:
 Before running this script, you must create a Personal Access Token (PAT) (see: [creating a personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) for more info) with the permissions `<repo>` and `<delete_repo>` scopes. You can read more about [Scopes for OAuth Apps here](https://developer.github.com/apps/building-oauth-apps/scopes-for-oauth-apps/). Once created, you must export your PAT as an environment variable named `<GITHUB_TOKEN>`.
@@ -12,7 +12,7 @@ Before running this script, you must create a Personal Access Token (PAT) (see: 
 export GITHUB_TOKEN=abcd1234efg567
 ```
 
-## Running the Script
+## RUNNING THE SCRIPT
 
 #### NAME:
 repo-cleaner - Deletes every repository matching a specific name pattern for the user or org specified up to 30 at a time
@@ -66,21 +66,21 @@ bash repo-cleaner -u=IAmHughes -s=MyRepo
 #### API DOCUMENTATION:
 All documentation can be found at the [GitHub Developer Docs](https://developer.github.com/v3/) page.
 
-## Contributing
+## CONTRIBUTING
 
 Please read [CONTRIBUTING.md](https://github.com/IAmHughes/IAmRepoCleaner/blob/master/.github/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Authors
+## AUTHORS
 
 * **Thomas Hughes** - _Maintainer / On-Going Support_ - [@IAmHughes](https://GitHub.com/IAmHughes)
 * **Michael Johnson** - _Initial Work_ - [@Migarjo](https://GitHub.com/Migarjo)
 
 See also the list of [contributors](https://github.com/IAmHughes/IAmRepoCleaner/contributors) who participated in this project.
 
-## License
+## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/IAmHughes/IAmRepoCleaner/blob/master/LICENSE) file for details.
 
-## Acknowledgments
+## ACKNOWLEDGEMENTS
 
 * Thanks to [@Migarjo](https://GitHub.com/Migarjo) for the initial base for the script.
